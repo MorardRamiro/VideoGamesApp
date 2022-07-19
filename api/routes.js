@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi');
 const axios = require('axios').default;
-const { insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame } = require('./db');
+const { insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames } = require('./db');
 
 const { API_KEY } = process.env;
 
@@ -68,6 +68,18 @@ router.get('/videogames', (req, res) => {
         genres: videogame.genres
       }))
       res.json(videogames)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
+    });
+});
+
+router.get('/videogames/count', (req, res) => {
+  const { name, type, genres } = req.query;
+  countVideoGames(name, type, genres)
+    .then((response) => {
+      res.json(response)
     })
     .catch((err) => {
       console.log(err)

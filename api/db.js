@@ -31,7 +31,7 @@ const getAllVideoGames = (name, pageNumber, order, orderBy, type, genres) => {
     if (type === 'official') {
       query.id = { $exists: true };
     };
-    if (type === 'unofficial') {
+    if (type === 'custom') {
       query.id = { $exists: false };
     };
   };
@@ -43,6 +43,27 @@ const getAllVideoGames = (name, pageNumber, order, orderBy, type, genres) => {
     .skip((pageNumber - 1) * 15)
     .limit(15)
     .toArray()
+};
+
+const countVideoGames = (name, type, genres) => {
+  const collection = db.collection('videogames');
+  const nameRegEx = new RegExp(`.*${name}.*`, 'i');
+  const query = {};
+  if (name && name.length) {
+    query.name = nameRegEx;
+  };
+  if (type && type.length) {
+    if (type === 'official') {
+      query.id = { $exists: true };
+    };
+    if (type === 'custom') {
+      query.id = { $exists: false };
+    };
+  };
+  if (genres && genres.length) {
+    query['genres.id'] = { $all: genres.split(',').map(Number) };
+  };
+  return collection.count(query)
 };
 
 const insertManyGenres = (genres) => {
@@ -77,4 +98,4 @@ const updateVideoGame = (id, updates) => {
   return collection.updateOne(query, { $set: updates })
 };
 
-module.exports = { init, insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame };
+module.exports = { init, insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames };
