@@ -1,12 +1,14 @@
 import React from 'react';
-import { Main } from './components/Main';
-import { Form } from './components/Form';
-import { Detail } from './components/Detail';
+import { Main } from './components/Main/Main';
+import { Form } from './components/Form/Form';
+import { Detail } from './components/Detail/Detail';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar/NavBar';
 
 function App() {
   return (
-    <BrowserRouter> 
+    <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/form' element={<Form />} />
