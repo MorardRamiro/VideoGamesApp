@@ -5,10 +5,10 @@ export const StyledAppBar = styled(AppBar)`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  background-color: lightgray;
+  background: rgba(0,0,0,.9);
   padding: 5px;
   & .css-1ujnqem-MuiTabs-root {
-    min-height: 0px
+    min-height: 0px;
   }
 `
 export const StyledGrid = styled(Grid)`

@@ -5,7 +5,10 @@ export const StyledAvatar = styled(Avatar)`
   width: 20px;
   height: 20px;
   color: white;
-  background-color: red;
+  background-color: #1976d2;
+  & .css-i4bv87-MuiSvgIcon-root {
+    height: 18px;
+  }
 `
 export const EnabledTypography = styled(Typography)`
 `

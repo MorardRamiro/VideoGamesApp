@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Paper, Grid, Avatar, Typography } from '@mui/material';
 
 export const StyledPaper = styled(Paper)`
-  background-color: yellow;
+  background: rgba(250,250,0,.8);
   padding-inline: 15px;
   padding-block: 5px;
   height: auto;
@@ -28,7 +28,7 @@ export const StyledAvatar = styled(Avatar)`
 `
 
 export const StyledTitlePaper = styled(Paper)`
-  background-color: yellow;
+  background: rgba(250,250,0,.8);
   padding: 50px;
   min-height: 400px;
 `
@@ -42,5 +42,5 @@ export const StyledTypography = styled(Typography)`
 export const StyledDescriptionTypography = styled(Typography)`
   text-align: justify;
   text-indent: 2em;
-  white-space: break-spaces;
+  white-space: normal;
 `

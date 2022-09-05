@@ -9,6 +9,7 @@ export default function CustomDatePicker(props: any) {
     <LocalizationProvider dateAdapter={AdapterDateFns} xs={{ 'max-height': '50px' }}>
       <DesktopDatePicker
         label='Release date'
+        inputFormat='dd/MM/yyyy'
         value={value}
         onChange={onChange}
         renderInput={(params) => <StyledTextField {...params} />}

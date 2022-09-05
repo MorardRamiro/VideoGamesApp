@@ -20,6 +20,13 @@ export const StyledGridContainer = styled(Grid)`
   & .css-kepfjy-MuiFormControl-root-MuiTextField-root {
     width: 100%;
   }
+  & .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 10px;
+  }
+  & .css-vj1n65-MuiGrid-root {
+    margin-top: -8px;
+    margin-bottom: 8px;
+  }
 `
 
 export const StyledButtonGrid = styled(Grid)`
@@ -29,7 +36,7 @@ export const StyledButtonGrid = styled(Grid)`
 `
 
 export const StyledPaper = styled(Paper)`
-  background-color: yellow;
+  background: rgba(250,250,0,.8);
   max-width: 800px;
 `
 

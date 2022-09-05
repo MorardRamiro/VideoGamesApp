@@ -3,8 +3,6 @@ import { styled } from '@mui/material/styles';
 
 export const StyledGrid = styled(Grid)`
   margin: 5px;
-  & .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-    top: -7px;
   }
 `
 
@@ -15,7 +13,7 @@ export const StyledGlobalGrid = styled(Grid)`
 `
 
 export const StyledPaper = styled(Paper)`
-  background-color: yellow;
+  background: rgba(250,250,0,.8);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

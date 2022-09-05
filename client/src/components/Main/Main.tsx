@@ -4,14 +4,14 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { Grid } from '@mui/material';
 import CardHolder from './sub-components/CardHolder/CardHolder';
 import { FormControlCheckbox } from './sub-components/FormControlCheckbox';
-import { FormControlSelect } from './sub-components/FormControlSelect';
+import { FormControlSelect } from './sub-components/FormControlSelect/FormControlSelect';
 import { FormControlSwitch } from './sub-components/FormControlSwitch/FormControlSwitch';
 import { InputNameSearch } from './sub-components/InputNameSearch';
 import PaginationButtons from './sub-components/PaginationButtons';
 import { Abc, ArrowDropDown, ArrowDropUp, Star } from '@mui/icons-material';
 import { StyledGrid, StyledPaper, StyledGridContainer, StyledGridCheckbox, StyledGridSwitch, PaginationGrid, StyledGlobalGrid } from './styles';
 
-export function Main() {
+export default function Main() {
   const [name, setName] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [order, setOrder] = useState('asc');

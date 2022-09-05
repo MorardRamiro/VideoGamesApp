@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES, GET_GENRES, COUNT_VIDEOGAMES, GET_VIDEOGAME_DETAIL, CREATE_NEW_VIDEOGAME, DELETE_VIDEOGAME } from "./types";
+import { GET_VIDEOGAMES, GET_GENRES, COUNT_VIDEOGAMES, GET_VIDEOGAME_DETAIL, CREATE_NEW_VIDEOGAME, DELETE_VIDEOGAME, GET_PLATFORMS } from "./types";
 import { VideoGame } from '../interfaces'; 
 import { Dispatch } from 'redux';
 
@@ -19,6 +19,16 @@ export const getGenres = () => {
       .then(response => response.json())
       .then(obj =>
         dispatch({ type: GET_GENRES, payload: obj })
+      )
+  };
+};
+
+export const getPlatforms = () => {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:3001/platforms`)
+      .then(response => response.json())
+      .then(obj =>
+        dispatch({ type: GET_PLATFORMS, payload: obj })
       )
   };
 };

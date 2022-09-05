@@ -1,7 +1,8 @@
 import React from 'react';
-import { InputLabel, MenuItem, OutlinedInput, Select, Box, Chip, FormControl, FormHelperText } from '@mui/material';
-import { Genre } from '../../../interfaces';
+import { MenuItem, OutlinedInput, Select, Box, Chip, FormControl, FormHelperText } from '@mui/material';
+import { Genre } from '../../../../interfaces';
 import { Cancel } from '@mui/icons-material';
+import { StyledInputLabel } from './styles';
 
 export function FormControlSelect(props: any) {
   const { onChange, options, name, state, onDelete, placeholder, error, helperText
@@ -10,7 +11,7 @@ export function FormControlSelect(props: any) {
   return (
     <Box>
       <FormControl fullWidth error={error}>
-        <InputLabel>{name}</InputLabel>
+        <StyledInputLabel>{name}</StyledInputLabel>
         <Select
           size='small'
           input={<OutlinedInput label={name} />}

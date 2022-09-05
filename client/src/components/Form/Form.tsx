@@ -1,20 +1,20 @@
 import React, { useState, ChangeEvent, useCallback, useEffect, MouseEvent } from 'react';
-import { createNewVideoGame, getGenres, } from '../../actions';
+import { createNewVideoGame, getGenres, getPlatforms, } from '../../actions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { Genre } from '../../interfaces';
 import { Button, Grid, Typography } from '@mui/material';
 import { InputNameSearch } from '../Main/sub-components/InputNameSearch';
-import { FormControlSelect } from '../Main/sub-components/FormControlSelect';
-import CustomRating from './CustomRating';
+import { FormControlSelect } from '../Main/sub-components/FormControlSelect/FormControlSelect';
+import CustomRating from './CustomRating/CustomRating';
 import CustomDatePicker from './CustomDatePicker/CustomDatePicker';
 import { StyledPaper, StyledGrid, StyledButtonGrid, StyledGridContainer, StyledBox, StyledAvatar, StyledAvatarGrid } from './styles';
 
-export function Form() {
+export default function Form() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [releaseDate, setReleaseDate] = useState(new Date());
   const [rating, setRating] = useState(1);
-  const [platforms, setPlatforms] = useState([] as string[]);
+  const [platform, setPlatform] = useState([] as Genre[]);
   const [image, setImage] = useState('');
   const [genre, setGenre] = useState([] as Genre[]);
 
@@ -22,7 +22,7 @@ export function Form() {
   const [descriptionError, setDescriptionError] = useState('');
   //const [releaseDateError, setReleaseDateError] = useState('');
   //const [ratingError, setRatingError] = useState('');
-  const [platformsError, setPlatformsError] = useState('');
+  const [platformError, setPlatformError] = useState('');
   const [imageError, setImageError] = useState('');
   const [genreError, setGenreError] = useState('');
 
@@ -61,10 +61,10 @@ export function Form() {
     } else {
       setGenreError('');
     }
-    if (!platforms.length) {
-      setPlatformsError('At least one genre must be selected.');
+    if (!platform.length) {
+      setPlatformError('At least one platform must be selected.');
     } else {
-      setPlatformsError('');
+      setPlatformError('');
     }
   }
 
@@ -74,24 +74,30 @@ export function Form() {
     dispatch(getGenres());
   }, [dispatch]);
 
+  const fetchPlatforms = useCallback(() => {
+    dispatch(getPlatforms());
+  }, [dispatch]);
+
   const fetchCreateNewVideoGame = useCallback(() => {
     dispatch(createNewVideoGame({
       name,
       description,
       release_date: releaseDate,
       rating,
-      platforms,
+      platforms: platform,
       genres: genre,
     }))
-  }, [dispatch, name, description, releaseDate, rating, platforms, genre])
+  }, [dispatch, name, description, releaseDate, rating, platform, genre])
 
   useEffect(() => {
     fetchGenres();
-  }, [fetchGenres]);
+    fetchPlatforms();
+  }, [fetchGenres, fetchPlatforms]);
 
   const {
     genres,
-  } = useAppSelector((rootReducer) => rootReducer.genres);
+    platforms,
+  } = useAppSelector((rootReducer) => rootReducer);
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -110,7 +116,7 @@ export function Form() {
     if (genre.map((e: Genre) => e.id).includes(newGenre)) {
       setGenre([...genre.filter((gen: Genre) => gen.id !== newGenre)]);
     } else {
-      setGenre([...genre, genres.find((gen: Genre) => gen.id === newGenre)])
+      setGenre([...genre, genres.genres.find((gen: Genre) => gen.id === newGenre)])
     }
   };
 
@@ -127,43 +133,27 @@ export function Form() {
   };
 
   const handlePlatformChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newPlatform = event.target.value;
-    if (platforms.includes(newPlatform)) {
-      setPlatforms([...platforms.filter((plat: string) => plat !== newPlatform)]);
+    const newPlatform = Number(event.target.value);
+    if (platform.map((e: Genre) => e.id).includes(newPlatform)) {
+      setPlatform([...platform.filter((plat: Genre) => plat.id !== newPlatform)]);
     } else {
-      setPlatforms([...platforms, newPlatform])
+      setPlatform([...platform, platforms.platforms.find((plat: Genre) => plat.id === newPlatform)])
     }
   };
 
   const handleGenreCancel = (value: Genre) => {
     setGenre([...genre.filter((gen: Genre) => gen.id !== value.id)]);
-    ;
   }
 
-  const handlePlatformCancel = (id: string) => {
-    setPlatforms([...platforms.filter((plat: string) => plat !== id)])
+  const handlePlatformCancel = (value: Genre) => {
+    setPlatform([...platform.filter((plat: Genre) => plat.id !== value.id)]);
   }
 
   const handleFormSubmit = (event: MouseEvent) => {
     event.preventDefault();
     validateAll();
-    if (![nameError, descriptionError, imageError, /* releaseDateError, ratingError, */ platformsError, genreError].join('').length) fetchCreateNewVideoGame();
+    if (![nameError, descriptionError, imageError, /* releaseDateError, ratingError, */ platformError, genreError].join('').length) fetchCreateNewVideoGame();
   };
-
-  const options = [
-    {
-      name: 'PC',
-      id: 'PC',
-    },
-    {
-      name: 'XBox',
-      id: 'XBox',
-    },
-    {
-      name: 'Playstation',
-      id: 'Playstation',
-    }
-  ]
 
   return (
     <div>
@@ -171,7 +161,7 @@ export function Form() {
         <StyledPaper>
           <Grid container spacing={1}>
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Typography variant='h3'>Create a new videogame</Typography>
+              <Typography variant='h3'>Create a new VideoGame</Typography>
             </Grid>
             <StyledGrid item xs={12}>
               <InputNameSearch
@@ -213,10 +203,10 @@ export function Form() {
               </StyledGrid>
             </StyledGridContainer>
             <StyledGrid item xs={12}>
-              {genres.length && <FormControlSelect
+              {genres.genres.length && <FormControlSelect
                 onChange={handleGenreChange}
                 onDelete={handleGenreCancel}
-                options={genres}
+                options={genres.genres}
                 name={'Genres'}
                 state={genre}
                 error={genreError.length}
@@ -227,16 +217,16 @@ export function Form() {
               <FormControlSelect
                 onChange={handlePlatformChange}
                 onDelete={handlePlatformCancel}
-                options={options}
+                options={platforms.platforms}
                 name={'Platforms'}
-                state={platforms}
-                error={platformsError.length}
-                helperText={platformsError}
+                state={platform}
+                error={platformError.length}
+                helperText={platformError}
               />
             </StyledGrid>
             <StyledButtonGrid item xs={12}>
               <Button onClick={handleFormSubmit} variant='outlined'>
-                CREATE
+                <Typography>CREATE</Typography>
               </Button>
             </StyledButtonGrid>
           </Grid>

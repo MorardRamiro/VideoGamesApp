@@ -5,8 +5,8 @@ export interface VideoGame {
   description: string,
   release_date: Date,
   rating: number,
-  platforms: string[],
-  genres: { name: string, id: number }[]
+  platforms: Genre[],
+  genres: Genre[]
 };
 
 export interface VideoGameWithID {

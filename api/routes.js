@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi');
 const axios = require('axios').default;
-const { insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames } = require('./db');
+const { insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames, insertManyPlatforms, getPlatforms } = require('./db');
 
 const { API_KEY } = process.env;
 
@@ -125,6 +125,44 @@ router.get('/genres', (req, res) => {
     });
 });
 
+router.post('/platforms', (req, res) => {
+  axios.get(`https://api.rawg.io/api/platforms?key=${API_KEY}`).then((response) => {
+    let allPlatforms = response.data.results.map(platform => ({
+      id: platform.id,
+      name: platform.name,
+    }))
+    const result = genresSchema.validate(allPlatforms);
+    if (result.error) {
+      console.log(result.error)
+      res.status(400).end()
+      return
+    };
+    insertManyPlatforms(allPlatforms);
+  })
+    .then(() => {
+      res.status(200).end()
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
+    });
+});
+
+router.get('/platforms', (req, res) => {
+  getPlatforms()
+    .then((platforms) => {
+      platforms = platforms.map((platform) => ({
+        id: platform.id,
+        name: platform.name,
+      }))
+      res.json(platforms)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
+    });
+});
+
 router.post('/videogame', (req, res) => {
   const videogame = req.body;
   const result = videoGameSchema.validate(videogame);
@@ -193,8 +231,8 @@ router.get('/videogame/:id', (req, res) => {
 
 router.put('/videogame/:id', (req, res) => {
   const { id } = req.params;
-  const { name, description, release_date, rating, platforms, image, genres} = req.body;
-  const updates = {name, description, release_date, rating, platforms, image, genres};
+  const { name, description, release_date, rating, platforms, image, genres } = req.body;
+  const updates = { name, description, release_date, rating, platforms, image, genres };
   const result = videoGameSchema.validate(updates);
   if (result.error) {
     console.log(result.error)

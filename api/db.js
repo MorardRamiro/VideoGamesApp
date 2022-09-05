@@ -76,6 +76,16 @@ const getGenres = () => {
   return collection.find({}).toArray();
 };
 
+const insertManyPlatforms = (platforms) => {
+  const collection = db.collection('platforms');
+  return collection.insertMany(platforms);
+};
+
+const getPlatforms = () => {
+  const collection = db.collection('platforms');
+  return collection.find({}).toArray();
+};
+
 const insertVideogame = (videogame) => {
   const collection = db.collection('videogames');
   return collection.insertOne(videogame);
@@ -98,4 +108,9 @@ const updateVideoGame = (id, updates) => {
   return collection.updateOne(query, { $set: updates })
 };
 
-module.exports = { init, insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames };
+module.exports = {
+  init, insertManyVideogames, getAllVideoGames,
+  insertManyGenres, getGenres, insertVideogame,
+  deleteVideoGame, getVideoGame, updateVideoGame,
+  countVideoGames, insertManyPlatforms, getPlatforms,
+};

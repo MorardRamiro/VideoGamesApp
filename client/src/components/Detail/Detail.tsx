@@ -8,7 +8,7 @@ import { Delete } from '@mui/icons-material';
 import { StyledGrid, StyledAvatar, StyledPaper, StyledGridContainer, StyledTitlePaper, StyledTypography, StyledGlobalGrid, StyledDescriptionTypography } from './styles';
 import moment from 'moment';
 
-export function Detail() {
+export default function Detail() {
   const dispatch = useAppDispatch();
 
   const { id } = useParams();
@@ -27,8 +27,8 @@ export function Detail() {
 
   useEffect(() => {
     fetchVideoGameDetail();
-    document.getElementById('description')!.innerHTML = videoGameDetail.description;
-  }, [fetchVideoGameDetail, videoGameDetail.description]);
+    document.getElementById('description')!.innerHTML = (videoGameDetail && videoGameDetail.description) || '';
+  }, [fetchVideoGameDetail, videoGameDetail]);
 
   const handleDeleteButton = () => {
     fetchDeleteVideoGame();

@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import genresReducer from '../reducers/genresReducer';
+import platformsReducer from '../reducers/platformsReducer';
 import videoGamesReducer from '../reducers/videoGamesReducer';
 
 export const store = configureStore({
   reducer: {
     videoGames: videoGamesReducer,
     genres: genresReducer,
+    platforms: platformsReducer,
   },
 });
 
