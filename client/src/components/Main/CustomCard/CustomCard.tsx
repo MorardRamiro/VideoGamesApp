@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { CardActionArea, CardMedia } from '@mui/material';
 import { StyledCard, StyledTypography, StyledCardContent } from './styles';
 

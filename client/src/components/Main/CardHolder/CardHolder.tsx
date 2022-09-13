@@ -1,15 +1,15 @@
-import React from 'react';
+
 import { Grid } from '@mui/material';
-import { VideoGameWithID } from '../../../../interfaces';
-import { CustomCard } from '../CustomCard/CustomCard';
+import { VideoGameWithID } from '../../../interfaces';
 import { StyledGrid } from './styles';
+import { CustomCard } from '../CustomCard/CustomCard';
 
 export default function CardHolder(props: any) {
   const { cardData } = props;
   return (
-    <Grid xs={12} sx={{ display: 'flex', 'flex-wrap': 'wrap', 'justify-content': 'flex-start' }}>
+    <Grid sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
       {cardData && cardData.map((obj: VideoGameWithID) => (
-        <StyledGrid item xs={2.4}>
+        <StyledGrid item xs={2.4} key={obj._id}>
           <CustomCard
             image={obj.image}
             name={obj.name}

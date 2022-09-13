@@ -1,8 +1,9 @@
 import { styled } from '@mui/material/styles';
 import { Paper, Grid, Avatar, Typography } from '@mui/material';
+import theme from '../../theme/palette';
 
 export const StyledPaper = styled(Paper)`
-  background: rgba(250,250,0,.8);
+  background: ${theme.transparentYellow};
   padding-inline: 15px;
   padding-block: 5px;
   height: auto;
@@ -28,7 +29,7 @@ export const StyledAvatar = styled(Avatar)`
 `
 
 export const StyledTitlePaper = styled(Paper)`
-  background: rgba(250,250,0,.8);
+  background: ${theme.transparentYellow};
   padding: 50px;
   min-height: 400px;
 `

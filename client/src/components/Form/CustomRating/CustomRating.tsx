@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Grid, InputLabel, Typography } from '@mui/material';
 import { StyledRating } from './styles';
 

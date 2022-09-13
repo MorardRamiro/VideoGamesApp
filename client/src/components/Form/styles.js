@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Avatar, Box, Grid, Paper } from '@mui/material';
+import theme from '../../theme/palette';
 
 export const StyledGrid = styled(Grid)`
   margin-inline: 12px;
@@ -36,7 +37,7 @@ export const StyledButtonGrid = styled(Grid)`
 `
 
 export const StyledPaper = styled(Paper)`
-  background: rgba(250,250,0,.8);
+  background: ${theme.transparentYellow};
   max-width: 800px;
 `
 

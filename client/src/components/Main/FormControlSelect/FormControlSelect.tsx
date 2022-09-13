@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { MenuItem, OutlinedInput, Select, Box, Chip, FormControl, FormHelperText } from '@mui/material';
-import { Genre } from '../../../../interfaces';
+import { Genre } from '../../../interfaces';
 import { Cancel } from '@mui/icons-material';
 import { StyledInputLabel } from './styles';
 

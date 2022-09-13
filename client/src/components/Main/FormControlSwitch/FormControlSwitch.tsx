@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Grid, Typography, Switch } from '@mui/material';
 import { StyledAvatar, DisabledTypography } from './styles';
 

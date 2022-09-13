@@ -2,11 +2,21 @@ import React, { useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { deleteVideoGame, getVideoGameDetail } from '../../actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { Button, Grid, Typography } from '@mui/material';
+import { Grid, List, ListItem, Typography } from '@mui/material';
 import { Genre } from '../../interfaces';
 import { Delete } from '@mui/icons-material';
-import { StyledGrid, StyledAvatar, StyledPaper, StyledGridContainer, StyledTitlePaper, StyledTypography, StyledGlobalGrid, StyledDescriptionTypography } from './styles';
+import {
+  StyledGrid,
+  StyledAvatar,
+  StyledPaper,
+  StyledGridContainer,
+  StyledTitlePaper,
+  StyledTypography,
+  StyledGlobalGrid,
+  StyledDescriptionTypography
+} from './styles';
 import moment from 'moment';
+import CustomDialog from '../Form/CustomDialog/CustomDialog';
 
 export default function Detail() {
   const dispatch = useAppDispatch();
@@ -32,6 +42,7 @@ export default function Detail() {
 
   const handleDeleteButton = () => {
     fetchDeleteVideoGame();
+    return true;
   };
 
   return (
@@ -42,11 +53,9 @@ export default function Detail() {
           <StyledAvatar
             alt=''
             src={videoGameDetail && videoGameDetail.image}
-            sx={{ height: '300px', width: '300px', float: 'left', 'shape-outside': 'circle()' }}
+            sx={{ height: '300px', width: '300px', float: 'left', shapeOutside: 'circle()' }}
           />
-          <StyledDescriptionTypography>
-            <div id='description' />
-          </StyledDescriptionTypography>
+          <StyledDescriptionTypography id='description' />
         </StyledTitlePaper>
       </Grid>
       <StyledPaper>
@@ -57,28 +66,34 @@ export default function Detail() {
           <Typography>
             Rating: {videoGameDetail && videoGameDetail.rating}
           </Typography>
-          <Typography>
-            Platforms:
-            <ul>
+          <Grid>
+            <Typography>Platforms:</Typography>
+            <List>
               {videoGameDetail && videoGameDetail.platforms && videoGameDetail.platforms.map((e: Genre) =>
-                <li key={e.id}>
-                  {e.name}
-                </li>)}
-            </ul>
-          </Typography>
-          <Typography>
-            Genres:
-            <ul>
+                <ListItem key={e.id}>
+                  <Typography>{e.name}</Typography>
+                </ListItem>)}
+            </List>
+          </Grid>
+          <Grid>
+            <Typography>Genres:</Typography>
+            <List>
               {videoGameDetail && videoGameDetail.genres && videoGameDetail.genres.map((e: Genre) =>
-                <li key={e.id}>
+                <ListItem key={e.id}>
                   {e.name}
-                </li>)}
-            </ul>
-          </Typography>
+                </ListItem>)}
+            </List>
+          </Grid>
           <StyledGlobalGrid>
-            {isNaN(Number(id)) && <Button onClick={handleDeleteButton} variant="outlined" startIcon={<Delete />}>
-              Delete
-            </Button>}
+            {isNaN(Number(id)) &&
+              <CustomDialog
+                handleClick={handleDeleteButton}
+                name={'DELETE'}
+                icon={<Delete />}
+                title={'Delete VideoGame?'}
+                text={'You are about to delete this videogame!'}
+                success={'You have successfully deleted the videogame!'}
+              />}
           </StyledGlobalGrid>
         </StyledGrid>
       </StyledPaper>

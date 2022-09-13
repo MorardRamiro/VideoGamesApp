@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect, ChangeEvent, MouseEvent } from 'react';
-import { countVideoGames, getGenres, getVideoGames } from '../../actions';
+import { countVideoGames, getGenres, getVideoGames, resetVideoGames } from '../../actions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { Grid } from '@mui/material';
-import CardHolder from './sub-components/CardHolder/CardHolder';
-import { FormControlCheckbox } from './sub-components/FormControlCheckbox';
-import { FormControlSelect } from './sub-components/FormControlSelect/FormControlSelect';
-import { FormControlSwitch } from './sub-components/FormControlSwitch/FormControlSwitch';
-import { InputNameSearch } from './sub-components/InputNameSearch';
-import PaginationButtons from './sub-components/PaginationButtons';
+import CardHolder from './CardHolder/CardHolder';
+import { FormControlCheckbox } from './FormControlCheckbox/FormControlCheckbox';
+import { FormControlSelect } from './FormControlSelect/FormControlSelect';
+import { FormControlSwitch } from './FormControlSwitch/FormControlSwitch';
+import { InputNameSearch } from './InputNameSearch/InputNameSearch';
+import PaginationButtons from './PaginationButtons/PaginationButtons';
 import { Abc, ArrowDropDown, ArrowDropUp, Star } from '@mui/icons-material';
 import { StyledGrid, StyledPaper, StyledGridContainer, StyledGridCheckbox, StyledGridSwitch, PaginationGrid, StyledGlobalGrid } from './styles';
 
@@ -22,6 +22,7 @@ export default function Main() {
   const dispatch = useAppDispatch();
 
   const fetchVideoGames = useCallback(() => {
+    dispatch(resetVideoGames());
     dispatch(countVideoGames(name, type, genre));
     dispatch(getVideoGames(name, pageNumber, order, orderBy, type, genre));
   }, [dispatch, name, pageNumber, order, orderBy, type, genre]);
@@ -100,58 +101,64 @@ export default function Main() {
   };
 
   return (
-    <StyledGlobalGrid>
-      <StyledGridContainer container xs={9}>
+    <StyledGlobalGrid container>
+      <StyledGridContainer item xs={9}>
         <StyledPaper>
-          <StyledGridContainer container xs={9}>
-            <StyledGrid item xs={7}>
-              <InputNameSearch
-                onChange={handleNameChange}
-                label={'Name'}
+          <Grid container>
+            <StyledGridContainer item xs={9}>
+              <Grid container>
+                <StyledGrid item xs={7}>
+                  <InputNameSearch
+                    onChange={handleNameChange}
+                    label={'Name'}
+                  />
+                </StyledGrid>
+                <StyledGridSwitch item xs={4}>
+                  <FormControlSwitch
+                    onClick={handleOrderByChange}
+                    defaultLabel={'Alphabetically'}
+                    alternativeLabel={'Rating'}
+                    defaultIcon={<Abc />}
+                    alternativeIcon={<Star />}
+                    defaultValue={''}
+                    alternativeValue={'rating'}
+                    currentValue={orderBy}
+                    label={'Order by:'}
+                  />
+                </StyledGridSwitch>
+              </Grid>
+              <Grid container>
+                <StyledGrid item xs={7}>
+                  <FormControlSelect
+                    onChange={handleGenreChange}
+                    onDelete={handleGenreCancel}
+                    options={genres.genres}
+                    name={'Genre'}
+                    state={genre}
+                  />
+                </StyledGrid>
+                <StyledGridSwitch item xs={4}>
+                  <FormControlSwitch
+                    onClick={handleOrderChange}
+                    defaultLabel={'Ascending'}
+                    alternativeLabel={'Descending'}
+                    defaultIcon={<ArrowDropUp />}
+                    alternativeIcon={<ArrowDropDown />}
+                    defaultValue={'asc'}
+                    alternativeValue={'desc'}
+                    currentValue={order}
+                    label={'Direction:'}
+                  />
+                </StyledGridSwitch>
+              </Grid>
+            </StyledGridContainer>
+            <StyledGridCheckbox item xs={2}>
+              <FormControlCheckbox
+                onChange={handleTypeChange}
+                state={type}
               />
-            </StyledGrid>
-            <StyledGridSwitch item xs={4}>
-              <FormControlSwitch
-                onClick={handleOrderByChange}
-                defaultLabel={'Alphabetically'}
-                alternativeLabel={'Rating'}
-                defaultIcon={<Abc />}
-                alternativeIcon={<Star />}
-                defaultValue={''}
-                alternativeValue={'rating'}
-                currentValue={orderBy}
-                label={'Order by:'}
-              />
-            </StyledGridSwitch>
-            <StyledGrid item xs={7}>
-              <FormControlSelect
-                onChange={handleGenreChange}
-                onDelete={handleGenreCancel}
-                options={genres.genres}
-                name={'Genre'}
-                state={genre}
-              />
-            </StyledGrid>
-            <StyledGridSwitch item xs={4}>
-              <FormControlSwitch
-                onClick={handleOrderChange}
-                defaultLabel={'Ascending'}
-                alternativeLabel={'Descending'}
-                defaultIcon={<ArrowDropUp />}
-                alternativeIcon={<ArrowDropDown />}
-                defaultValue={'asc'}
-                alternativeValue={'desc'}
-                currentValue={order}
-                label={'Direction:'}
-              />
-            </StyledGridSwitch>
-          </StyledGridContainer>
-          <StyledGridCheckbox container xs={2}>
-            <FormControlCheckbox
-              onChange={handleTypeChange}
-              state={type}
-            />
-          </StyledGridCheckbox>
+            </StyledGridCheckbox>
+          </Grid>
         </StyledPaper>
       </StyledGridContainer>
       <PaginationGrid>
@@ -161,7 +168,7 @@ export default function Main() {
           page={pageNumber}
         />
       </PaginationGrid>
-      <Grid container xs={12}>
+      <Grid container>
         <CardHolder cardData={videoGames.videoGames} />
       </Grid>
     </StyledGlobalGrid>

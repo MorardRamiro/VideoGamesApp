@@ -1,6 +1,15 @@
-import { GET_VIDEOGAMES, GET_GENRES, COUNT_VIDEOGAMES, GET_VIDEOGAME_DETAIL, CREATE_NEW_VIDEOGAME, DELETE_VIDEOGAME, GET_PLATFORMS } from "./types";
-import { VideoGame } from '../interfaces'; 
 import { Dispatch } from 'redux';
+import {
+  GET_VIDEOGAMES,
+  GET_GENRES,
+  COUNT_VIDEOGAMES,
+  GET_VIDEOGAME_DETAIL,
+  CREATE_NEW_VIDEOGAME,
+  DELETE_VIDEOGAME,
+  GET_PLATFORMS,
+  RESET_VIDEOGAMES
+} from "./types";
+import { VideoGame } from '../interfaces';
 
 export const getVideoGames = (name: string, pageNumber: number, order: string, orderBy: string, type: string, genres: number[]) => {
   const url = `http://localhost:3001/videogames?name=${name}&page=${pageNumber}&order=${order}&orderBy=${orderBy}&type=${type}&genres=${genres}`;
@@ -53,22 +62,30 @@ export const getVideoGameDetail = (id: string | number | undefined) => {
   };
 };
 
-export const createNewVideoGame = (videoGame: VideoGame ) => {
+export const createNewVideoGame = (videoGame: VideoGame) => {
   return (dispatch: Dispatch) => {
     return fetch(`http://localhost:3001/videogame`, { method: 'POST', headers: { 'Content-Type': 'application/JSON' }, body: JSON.stringify(videoGame) })
       .then(response => response.json())
       .then(obj =>
-        dispatch({ type: CREATE_NEW_VIDEOGAME, payload: obj })
+        dispatch({ type: CREATE_NEW_VIDEOGAME })
       )
   };
 };
 
 export const deleteVideoGame = (id: string | number | undefined) => {
   return (dispatch: Dispatch) => {
-    return fetch(`http://localhost:3001/videogame/${id}`, {method: 'DELETE'})
+    return fetch(`http://localhost:3001/videogame/${id}`, { method: 'DELETE' })
       .then(response => response.json())
       .then(obj =>
-        dispatch({ type: DELETE_VIDEOGAME, payload: obj })
+        dispatch({ type: DELETE_VIDEOGAME })
       )
   };
+};
+
+export const resetVideoGames = () => {
+  return (dispatch: Dispatch) => {
+    return dispatch({
+      type: RESET_VIDEOGAMES,
+    });
+  }
 };

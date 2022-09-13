@@ -1,14 +1,15 @@
-import React from 'react';
-import { Button, Tabs, Toolbar } from '@mui/material';
+
 import { Link } from 'react-router-dom';
+import { Button, Toolbar } from '@mui/material';
 import { Add, Search } from '@mui/icons-material';
 import { StyledAppBar, StyledGrid } from './styles';
+import { NAV_BAR } from '../../common/constants';
 
 function NavBar() {
   return (
-    <div>
+    <>
       <StyledAppBar>
-        <Tabs>
+        <Toolbar>
           <StyledGrid>
             <Button
               endIcon={<Search />}
@@ -16,7 +17,7 @@ function NavBar() {
               color='success'
               component={Link} to='/'
             >
-              SEARCH
+              {NAV_BAR.search}
             </Button>
           </StyledGrid>
           <StyledGrid>
@@ -26,13 +27,13 @@ function NavBar() {
               color='success'
               component={Link} to='/form'
             >
-              CREATE
+              {NAV_BAR.create}
             </Button>
           </StyledGrid>
-        </Tabs>
+        </Toolbar>
       </StyledAppBar>
       <Toolbar />
-    </div>
+    </>
   );
 };
 

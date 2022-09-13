@@ -1,9 +1,12 @@
-import { Grid, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Grid, Paper } from '@mui/material';
+import theme from '../../theme/palette';
 
 export const StyledGrid = styled(Grid)`
   margin: 5px;
-  }
+  display: flex;
+  justify-content: center;
+  flex-direction: column-reverse;
 `
 
 export const StyledGlobalGrid = styled(Grid)`
@@ -13,21 +16,22 @@ export const StyledGlobalGrid = styled(Grid)`
 `
 
 export const StyledPaper = styled(Paper)`
-  background: rgba(250,250,0,.8);
+  background: ${theme.transparentYellow};
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding-inline-start: 40px;
 `
 
 export const StyledGridContainer = styled(Grid)`
   display: flex;
-  align-items: center;
-  justify-content: space-around;  
+  flex-wrap: wrap;
 `
 
 export const StyledGridCheckbox = styled(Grid)`
   display: flex;
   align-content: center;
+  flex-wrap: wrap;
 `
 export const StyledGridSwitch = styled(Grid)`
   padding-left: 20px;

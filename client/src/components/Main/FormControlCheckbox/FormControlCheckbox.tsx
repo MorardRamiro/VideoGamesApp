@@ -1,11 +1,11 @@
-import React from 'react';
+
 import { FormControlLabel, Checkbox, Grid } from '@mui/material';
 
 export function FormControlCheckbox(props: any) {
   const { onChange, state } = props;
 
   return (
-    <Grid container xs={12}>
+    <Grid container>
       <Grid item xs={12}>
         <FormControlLabel
           label='All'
@@ -22,8 +22,8 @@ export function FormControlCheckbox(props: any) {
         />
       </Grid>
       <Grid container>
-        <Grid xs={1} />
-        <Grid xs={11}>
+        <Grid item xs={1} />
+        <Grid item xs={11}>
           <FormControlLabel
             disabled={state === 'official'}
             value={'official'}
@@ -31,8 +31,8 @@ export function FormControlCheckbox(props: any) {
             control={<Checkbox size='small' checked={state === 'official' || state === ''} onChange={onChange} />}
           />
         </Grid>
-        <Grid xs={1} />
-        <Grid xs={11}>
+        <Grid item xs={1} />
+        <Grid item xs={11}>
           <FormControlLabel
             disabled={state === 'custom'}
             value={'custom'}
