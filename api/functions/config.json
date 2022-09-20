@@ -1,0 +1,7 @@
+[
+    {
+        "name": "getGenres",
+        "private": false,
+        "disable_arg_logs": true
+    }
+]
