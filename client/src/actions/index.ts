@@ -7,7 +7,11 @@ import {
   CREATE_NEW_VIDEOGAME,
   DELETE_VIDEOGAME,
   GET_PLATFORMS,
-  RESET_VIDEOGAMES
+  RESET_VIDEOGAMES,
+  CREATE_VIDEOGAMES,
+  CREATE_GENRES,
+  CREATE_PLATFORMS,
+  COUNT_TOTAL_VIDEOGAMES
 } from "./types";
 import { VideoGame } from '../interfaces';
 
@@ -66,7 +70,7 @@ export const createNewVideoGame = (videoGame: VideoGame) => {
   return (dispatch: Dispatch) => {
     return fetch(`http://localhost:3001/videogame`, { method: 'POST', headers: { 'Content-Type': 'application/JSON' }, body: JSON.stringify(videoGame) })
       .then(response => response.json())
-      .then(obj =>
+      .then(() =>
         dispatch({ type: CREATE_NEW_VIDEOGAME })
       )
   };
@@ -76,7 +80,7 @@ export const deleteVideoGame = (id: string | number | undefined) => {
   return (dispatch: Dispatch) => {
     return fetch(`http://localhost:3001/videogame/${id}`, { method: 'DELETE' })
       .then(response => response.json())
-      .then(obj =>
+      .then(() =>
         dispatch({ type: DELETE_VIDEOGAME })
       )
   };
@@ -88,4 +92,44 @@ export const resetVideoGames = () => {
       type: RESET_VIDEOGAMES,
     });
   }
+};
+
+export const createVideoGames = () => {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:3001/videogames`, { method: 'POST' })
+      .then(response => response.json())
+      .then(() =>
+        dispatch({ type: CREATE_VIDEOGAMES })
+      )
+  };
+};
+
+export const createGenres = () => {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:3001/genres`, { method: 'POST' })
+      .then(response => response.json())
+      .then(() =>
+        dispatch({ type: CREATE_GENRES })
+      )
+  };
+};
+
+export const createPlatforms = () => {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:3001/platforms`, { method: 'POST' })
+      .then(response => response.json())
+      .then(() =>
+        dispatch({ type: CREATE_PLATFORMS })
+      )
+  };
+};
+
+export const countTotalVideoGames = () => {
+  return (dispatch: Dispatch) => {
+    return fetch(`http://localhost:3001/videogames/count`)
+      .then(response => response.json())
+      .then(obj =>
+        dispatch({ type: COUNT_TOTAL_VIDEOGAMES, payload: obj })
+      )
+  };
 };

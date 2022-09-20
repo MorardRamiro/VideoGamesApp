@@ -203,7 +203,7 @@ export default function Form() {
             </StyledGrid>
           </StyledGridContainer>
           <StyledGrid item xs={12}>
-            {genres.genres.length && <FormControlSelect
+            <FormControlSelect
               onChange={handleGenreChange}
               onDelete={handleGenreCancel}
               options={genres.genres}
@@ -211,7 +211,7 @@ export default function Form() {
               state={genre}
               error={genreError.length > 0}
               helperText={genreError}
-            />}
+            />
           </StyledGrid>
           <StyledGrid item xs={12}>
             <FormControlSelect

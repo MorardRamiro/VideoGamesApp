@@ -13,6 +13,12 @@ let db;
 const init = () =>
   MongoClient.connect(connectionUrl, { useNewUrlParser: true }).then((client) => {
     db = client.db(dbName);
+    const videogames = db.collection('videogames');
+    videogames.createIndex({ name: 1, id: 1 }, { unique: true });
+    const genres = db.collection('genres');
+    genres.createIndex({ name: 1, id: 1 }, { unique: true });
+    const platforms = db.collection('platforms');
+    platforms.createIndex({ name: 1, id: 1 }, { unique: true });
   });
 
 const insertManyVideogames = (videogames) => {
@@ -108,9 +114,25 @@ const updateVideoGame = (id, updates) => {
   return collection.updateOne(query, { $set: updates })
 };
 
+const deleteVideoGames = () => {
+  const collection = db.collection('videogames');
+  return collection.deleteMany({});
+};
+
+const deleteGenres = () => {
+  const collection = db.collection('genres');
+  return collection.deleteMany({});
+};
+
+const deletePlatforms = () => {
+  const collection = db.collection('platforms');
+  return collection.deleteMany({});
+};
+
 module.exports = {
   init, insertManyVideogames, getAllVideoGames,
   insertManyGenres, getGenres, insertVideogame,
   deleteVideoGame, getVideoGame, updateVideoGame,
   countVideoGames, insertManyPlatforms, getPlatforms,
+  deleteVideoGames, deleteGenres, deletePlatforms,
 };

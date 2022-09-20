@@ -4,12 +4,16 @@ import { Button, Toolbar } from '@mui/material';
 import { Add, Search } from '@mui/icons-material';
 import { StyledAppBar, StyledGrid } from './styles';
 import { NAV_BAR } from '../../common/constants';
+import LoadButton from './LoadButton/LoadButton';
 
 function NavBar() {
   return (
     <>
       <StyledAppBar>
         <Toolbar>
+          <StyledGrid>
+            <LoadButton />
+          </StyledGrid>
           <StyledGrid>
             <Button
               endIcon={<Search />}

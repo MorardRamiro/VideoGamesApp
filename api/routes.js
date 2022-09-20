@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi');
 const axios = require('axios').default;
-const { insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames, insertManyPlatforms, getPlatforms } = require('./db');
+const { insertManyVideogames, getAllVideoGames, insertManyGenres, getGenres, insertVideogame, deleteVideoGame, getVideoGame, updateVideoGame, countVideoGames, insertManyPlatforms, getPlatforms, deleteVideoGames, deletePlatforms, deleteGenres } = require('./db');
 
 const { API_KEY } = process.env;
 
@@ -240,6 +240,39 @@ router.put('/videogame/:id', (req, res) => {
     return
   };
   updateVideoGame(id, updates)
+    .then(() => {
+      res.status(200).end()
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
+    });
+});
+
+router.delete('/videogames', (req, res) => {
+  deleteVideoGames()
+    .then(() => {
+      res.status(200).end()
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
+    });
+});
+
+router.delete('/platforms', (req, res) => {
+  deletePlatforms()
+    .then(() => {
+      res.status(200).end()
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
+    });
+});
+
+router.delete('/genres', (req, res) => {
+  deleteGenres()
     .then(() => {
       res.status(200).end()
     })

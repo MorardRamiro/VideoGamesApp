@@ -8,6 +8,7 @@ const lowTransparencyBlack = 'rgba(0, 0, 0, .9)';
 const mediumTransparencyBlack = 'rgba(0, 0, 0, .8)';
 const highTransparencyBlack = 'rgba(0, 0, 0, .25)';
 const transparentYellow = 'rgba(250, 250, 0, .8)';
+const transparentWhite = 'rgba(250, 250, 250, .26)'
 
 const theme = {
   white,
@@ -19,6 +20,7 @@ const theme = {
   mediumTransparencyBlack,
   highTransparencyBlack,
   transparentYellow,
+  transparentWhite,
 }
 
 export default theme;
