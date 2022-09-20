@@ -1,7 +1,7 @@
 // This function is the endpoint's request handler.
 exports = function(request, response) {
   
-  const doc = context.services.get("mongodb-atlas").db("Cluster0").collection("genres").find({}).toArray();
+  const doc = context.services.get("mongodb-atlas").db("MorardRamiro").collection("genres").find({}).toArray();
   return doc;
   //const collection = db.collection('genres');
   //return collection.find({}).toArray();
